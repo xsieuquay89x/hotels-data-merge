@@ -132,7 +132,7 @@ curl -s -H "Content-Type: application/json" -X GET http://localhost:3000/hotels
 ```
 
 ```
-curl -s -H "Content-Type: application/json" -X POST http://localhost:3000/hotels?id=iJhz
+curl -s -H "Content-Type: application/json" -X GET http://localhost:3000/hotels?id=iJhz
 ```
 
 ### Response format
