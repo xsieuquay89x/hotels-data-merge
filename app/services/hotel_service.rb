@@ -15,9 +15,14 @@ class HotelService
 
   def get_hotels
     keys = $redis.keys('*')
-    hotels = $redis.mget(keys)
-    hotels.map do |hotel|
-      JSON.parse(hotel, {:symbolize_names => true})
+
+    if keys.present?
+      hotels = $redis.mget(keys)
+      hotels.map do |hotel|
+        JSON.parse(hotel, {:symbolize_names => true})
+      end
+    else
+      []
     end
   end
 end

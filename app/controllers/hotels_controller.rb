@@ -18,7 +18,7 @@ class HotelsController < ApplicationController
     service.call
 
     if service.success?
-      json_response('Collect Hotels Success')
+      json_response(message: 'Collect Hotels Success', status: :created)
     else
       json_response(message: service.errors.first&.message, status: :error)
     end

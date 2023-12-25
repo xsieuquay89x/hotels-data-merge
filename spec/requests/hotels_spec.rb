@@ -7,13 +7,8 @@ describe 'Hotels API' do
       tags 'Hotels'
       consumes 'application/json'
 
-      response '201', 'collected' do
+      response '200', 'collected' do
         let(:message) { { message: 'Collect Hotels Success' } }
-        run_test!
-      end
-
-      response '500', 'Server Error' do
-        let(:message) { { message: 'Something Error' } }
         run_test!
       end
     end
@@ -26,43 +21,52 @@ describe 'Hotels API' do
       produces 'application/json'
 
       response '200', 'Hotels Founds' do
-        schema type: :object,
-               properties: {
-                 id: { type: :string, },
-                 destination_id: { type: :integer, },
-                 name: { type: :string },
-                 description: { type: :string },
-                 booking_conditions: { type: :array, items: {
-                   type: :string
-                 } },
-                 amenities: { type: :object, properties: {
-                   general: { type: :array },
-                   room: { type: :array }
-                 } },
-                 images: { type: :object, properties: {
-                   amenities: { type: :object, properties: {
-                     link: { type: :string },
-                     description: { type: :string }
-                   } },
-                   rooms: { type: :object, properties: {
-                     link: { type: :string },
-                     description: { type: :string }
-                   } },
-                   site: { type: :object, properties: {
-                     link: { type: :string },
-                     description: { type: :string }
-                   } },
-                 } },
-                 location: { type: :object, properties: {
-                   address: { type: :string },
-                   city: { type: :string },
-                   country: { type: :string },
-                   lat: { type: :number },
-                   lng: { type: :number }
-                 } }
-               },
+        schema type: :array, items: {
+          type: :object,
+          properties: {
+            id: { type: :string, },
+            destination_id: { type: :integer, },
+            name: { type: :string },
+            description: { type: :string },
+            booking_conditions: { type: :array, items: {
+              type: :string
+            } },
+            amenities: { type: :object, properties: {
+              general: { type: :array },
+              room: { type: :array }
+            } },
+            images: { type: :object, properties: {
+              rooms: { type: :arry, items: {
+                type: :object,
+                properties: {
+                  link: { type: :string },
+                  description: { type: :string }
+                }}
+              },
+              site: { type: :arry, items: {
+                type: :object,
+                properties: {
+                  link: { type: :string },
+                  description: { type: :string }
+                }}
+              },
+              amenities: { type: :arry, items: {
+                type: :object,
+                properties: {
+                  link: { type: :string },
+                  description: { type: :string }
+                }}
+              }
+            } },
+            location: { type: :object, properties: {
+              address: { type: :string },
+              city: { type: :string },
+              country: { type: :string },
+              lat: { type: :float },
+              lng: { type: :float }
+            } }
+          }},
                required: [ ]
-
         example 'application/json', :hotels, [
           {
             "id": "iJhz",
@@ -102,10 +106,6 @@ describe 'Hotels API' do
             ]
           }
         ]
-        run_test!
-      end
-
-      response '404', 'Could not find Hotels' do
         run_test!
       end
     end
@@ -121,41 +121,51 @@ describe 'Hotels API' do
       }
 
       response '200', 'Hotel Found' do
-        schema type: :object,
-               properties: {
-                 id: { type: :string, },
-                 destination_id: { type: :integer, },
-                 name: { type: :string },
-                 description: { type: :string },
-                 booking_conditions: { type: :array, items: {
-                   type: :string
-                 } },
-                 amenities: { type: :object, properties: {
-                   general: { type: :array },
-                   room: { type: :array }
-                 } },
-                 images: { type: :object, properties: {
-                   amenities: { type: :object, properties: {
-                     link: { type: :string },
-                     description: { type: :string }
-                   } },
-                   rooms: { type: :object, properties: {
-                     link: { type: :string },
-                     description: { type: :string }
-                   } },
-                   site: { type: :object, properties: {
-                     link: { type: :string },
-                     description: { type: :string }
-                   } },
-                 } },
-                 location: { type: :object, properties: {
-                   address: { type: :string },
-                   city: { type: :string },
-                   country: { type: :string },
-                   lat: { type: :number },
-                   lng: { type: :number }
-                 } }
+        schema type: :array, items: {
+          type: :object,
+          properties: {
+             id: { type: :string, },
+             destination_id: { type: :integer, },
+             name: { type: :string },
+             description: { type: :string },
+             booking_conditions: { type: :array, items: {
+               type: :string
+             } },
+             amenities: { type: :object, properties: {
+               general: { type: :array },
+               room: { type: :array }
+             } },
+             images: { type: :object, properties: {
+               rooms: { type: :arry, items: {
+                  type: :object,
+                  properties: {
+                    link: { type: :string },
+                    description: { type: :string }
+                  }}
                },
+               site: { type: :arry, items: {
+                 type: :object,
+                 properties: {
+                   link: { type: :string },
+                   description: { type: :string }
+                 }}
+               },
+               amenities: { type: :arry, items: {
+                 type: :object,
+                 properties: {
+                   link: { type: :string },
+                   description: { type: :string }
+                 }}
+               }
+             } },
+             location: { type: :object, properties: {
+               address: { type: :string },
+               city: { type: :string },
+               country: { type: :string },
+               lat: { type: :float },
+               lng: { type: :float }
+             } }
+           }},
                required: [ ]
         example 'application/json', :hotels, [
           {
@@ -196,10 +206,7 @@ describe 'Hotels API' do
             ]
           }
         ]
-        run_test!
-      end
-
-      response '404', 'Could not find Hotels with id = {id}' do
+        let(:id) { 'iJhz' }
         run_test!
       end
     end
