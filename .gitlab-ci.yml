@@ -1,0 +1,26 @@
+stages:
+  - test
+  - deploy
+
+before_script:
+  - gem install bundler --no-document
+  - bundle install --jobs $(nproc) --retry 3
+
+test:
+  stage: test
+  script:
+    - bundle exec rspec
+
+swaggerize:
+  stage: test
+  script:
+    - bundle exec rake rswag:specs:swaggerize
+  only:
+    - master
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploy to production here"
+  only:
+    - master
